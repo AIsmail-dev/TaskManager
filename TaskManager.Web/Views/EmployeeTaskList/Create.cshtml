@@ -1,0 +1,106 @@
+﻿@model TaskManager.Services.EmployeeTaskDTO
+@{
+    ViewData["Title"] = "Emloyee Task List";
+}
+<div>
+    <form method="POST" id="employee-task-form" asp-controller="EmployeeTaskList" asp-action="AddEmployeeTask">
+        <h3>Step 1</h3>
+        <fieldset>
+            <legend>Step 1</legend>
+            <label for="TaskTitle">Task Title *</label>
+            <input id="TaskTitle" asp-for="TaskTitle" type="text" class="required">
+            <label for="Description">Description</label>
+            <input id="Description" asp-for="Description" type="text">
+            <p>(*) Mandatory</p>
+        </fieldset>
+        <h3>Step 2</h3>
+        <fieldset>
+            <legend>Step 2</legend>
+            <label for="ProjectId">Related Project *</label>
+            <div><select id="ProjectId" asp-for="ProjectId" type="text" class="required" asp-items="@(new SelectList(Model.Projects, "Key", "Value"))"></select></div>
+            <label for="StartDate">Start Date *</label>
+            <input id="StartDate" asp-for="StartDate" type="text" class="required">
+            <label for="ExpectedDate">Expected Date *</label>
+            <input id="ExpectedDate" asp-for="ExpectedDate" type="text" class="required">
+            <p>(*) Mandatory</p>
+        </fieldset>
+        <h3>Step 3</h3>
+        <fieldset>
+            <legend>Step 3</legend>
+            <label for="TaskStatusId">Task Status *</label>
+            <div><select id="TaskStatusId" asp-for="TaskStatusId" type="text" class="required" asp-items="@(new SelectList(Model.TaskStatuses, "Key", "Value"))"></select></div>
+            <label for="End Date">End Date *</label>
+            <input id="EndDate" asp-for="EndDate" type="text" class="required">
+        </fieldset>
+    </form>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@section Scripts
+{
+    <script src="~/js/jquery.steps.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <script>
+        jQuery(function ($) {
+            $("#StartDate").datetimepicker();
+            $("#ExpectedDate").datetimepicker();
+            $("#EndDate").datetimepicker();
+        });
+        var form = $("#employee-task-form").show();
+        form.steps({
+            headerTag: "h3",
+            bodyTag: "fieldset",
+            transitionEffect: "slideLeft",
+            stepsOrientation: "vertical",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                // Allways allow previous action even if the current form is not valid!
+                if (currentIndex > newIndex) {
+                    return true;
+                }
+                // Forbid next action on "Warning" step if the user is to young
+                if (newIndex === 3 && Number($("#age-2").val()) < 18) {
+                    return false;
+                }
+                // Needed in some cases if the user went back (clean up)
+                if (currentIndex < newIndex) {
+                    // To remove error styles
+                    form.find(".body:eq(" + newIndex + ") label.error").remove();
+                    form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+                }
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onStepChanged: function (event, currentIndex, priorIndex) {
+                // Used to skip the "Warning" step if the user is old enough.
+                if (currentIndex === 2 && Number($("#age-2").val()) >= 18) {
+                    form.steps("next");
+                }
+                // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
+                if (currentIndex === 2 && priorIndex === 3) {
+                    form.steps("previous");
+                }
+            },
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                $('#employee-task-form').submit();
+            }
+        }).validate({
+            errorPlacement: function errorPlacement(error, element) { element.before(error); },
+            rules: {
+                confirm: {
+                    equalTo: "#password-2"
+                }
+            }
+        });
+    </script>
+}

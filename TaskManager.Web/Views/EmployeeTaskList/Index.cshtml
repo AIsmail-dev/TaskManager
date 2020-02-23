@@ -1,0 +1,52 @@
+﻿@model List<TaskManager.Services.EmployeeTaskDTO>
+@{
+    ViewData["Title"] = "Emloyee Task List";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Task Title</th>
+            <th>Description</th>
+            <th>Project Name</th>
+            <th>Start Date</th>
+            <th>Expected Date</th>
+            <th>Task Status</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employeeTask in Model)
+        {
+            <tr>
+                <td>@employeeTask.TaskTitle</td>
+                <td>@employeeTask.Description</td>
+                <td>@employeeTask.ProjectName</td>
+                <td>@employeeTask.StartDate</td>
+                <td>@employeeTask.ExpectedDate</td>
+                <td>@employeeTask.TaskStatusName</td>
+                <td>@employeeTask.EndDate</td>
+            </tr>
+        }
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="7">No Data</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "search": {
+                    "smart": false
+                }
+            });
+        });
+    </script>
+}

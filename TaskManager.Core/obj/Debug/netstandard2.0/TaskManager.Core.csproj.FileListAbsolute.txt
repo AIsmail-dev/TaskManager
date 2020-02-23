@@ -1,0 +1,8 @@
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/bin/Debug/netstandard2.0/TaskManager.Core.deps.json
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/bin/Debug/netstandard2.0/TaskManager.Core.dll
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/bin/Debug/netstandard2.0/TaskManager.Core.pdb
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/obj/Debug/netstandard2.0/TaskManager.Core.csprojAssemblyReference.cache
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/obj/Debug/netstandard2.0/TaskManager.Core.AssemblyInfoInputs.cache
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/obj/Debug/netstandard2.0/TaskManager.Core.AssemblyInfo.cs
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/obj/Debug/netstandard2.0/TaskManager.Core.dll
+/Users/ahmedismail/Downloads/TaskManager/TaskManager.Core/obj/Debug/netstandard2.0/TaskManager.Core.pdb
